@@ -113,7 +113,9 @@
     transition: .5s;
 }
 
-.input-box input:focus~label {
+.input-box input:focus~label,
+.input-box input:user-valid~label,
+.input-box input:user-invalid~label {
     font-size: .8em;
     top: -14px;
     left: 17px;
@@ -131,7 +133,7 @@
     position: absolute;
     top: 14px;
     left: 400px;
-    font-size: 1.4em;
+    font-size: 1.2em;
     color: #fff;
     cursor: pointer;
 }
