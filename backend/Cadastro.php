@@ -2,8 +2,8 @@
 
 $name = $_POST['name'];
 $email = $_POST['email'];
-$passwordCad = PASSWORD_DEFAULT(password_hash($_POST['password']));
-$passwordConf = $_POST['password-confirm'];
+$passwordCad = password_hash($_POST['password'], PASSWORD_DEFAULT);
+$passwordConf = password_hash($_POST['password-confirm'], PASSWORD_DEFAULT);
 
 if ($passwordCad !== $passwordConf) {
     echo "<script> window.alert('senha incorreta!')</script>";
@@ -29,8 +29,8 @@ $resultado = $stmt->execute([
 
 if ($resultado) {
     $c = DIRECTORY_SEPARATOR;
-    header('Location: src{$c}login{$c}index.html');
+    header('Location: ..{$c}src{$c}login{$c}index.html');
 } else {
     $c = DIRECTORY_SEPARATOR;
-    header('Location: src{$c}register{$c}cadastro.html');
+    header('Location: ..{$c}src{$c}register{$c}cadastro.html');
 }

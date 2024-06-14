@@ -4,7 +4,7 @@ session_start();
     if (!empty($_POST['email']) && !empty($_POST['password'])) {
 
         $email = $_POST['email'];
-        $password = $_POST['password'];
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
         $sql = "SELECT * FROM usuarios WHERE email = ?";
         require_once "Conexao.php";
@@ -22,9 +22,13 @@ session_start();
             header("location: ..{$b}src{$b}login{$b}index.html");
         }
 
-        if ($usuario->password == $password) {
+        if (password_verify($password, $usuario['password'])) {
             $b = DIRECTORY_SEPARATOR;
             header("location: ..{$b}src{$b}library{$b}library.html");
+        }else {
+            $b = DIRECTORY_SEPARATOR;
+            header("location: ..{$b}src{$b}login{$b}login.html");
+            echo "<script>window.alert('senha incorreta!')</script>";
         }
 
 } 
