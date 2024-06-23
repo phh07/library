@@ -9,9 +9,8 @@ if ($passwordCad !== $passwordConf) {
     echo "<script> window.alert('senha incorreta!')</script>";
 }else {
     $passwordCad = $passwordConf;
-}
 
-require_once "Conexao.php";
+    require_once "Conexao.php";
 
 $sql = "INSERT INTO usuarios(name, password, email)" .
         "VALUES( :name, :password, :email)";
@@ -29,8 +28,11 @@ $resultado = $stmt->execute([
 
 if ($resultado) {
     $c = DIRECTORY_SEPARATOR;
-    header('Location: ..{$c}src{$c}login{$c}index.html');
+    header("Location: ..{$c}src{$c}login{$c}index.html");
 } else {
     $c = DIRECTORY_SEPARATOR;
-    header('Location: ..{$c}src{$c}register{$c}cadastro.html');
+    header("Location: ..{$c}src{$c}register{$c}cadastro.html");
 }
+
+}
+

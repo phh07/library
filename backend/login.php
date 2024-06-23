@@ -9,25 +9,25 @@ session_start();
         $sql = "SELECT * FROM usuarios WHERE email = ?";
         require_once "Conexao.php";
 
-        $c = DIRECTORY_SEPARATOR;
-        $pdo = Conexao::conectar("..{$c}config{$c}config.ini");
+        $pdo = Conexao::conectar("../config/config.ini");
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$email]);
-        $usuario = $stmt->fetchObject();
-        
-        if (!$usuario) {
-            echo "<script>window.alert('essa conta não existe!')</script>";
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (password_verify($_POST['$password'], $usuario['password'])) {
+            if (count($usuario) != "0") {
+                $_SESSION['email'] = $email;
+                $_SESSION['password'] = $password;
+                
+                $b = DIRECTORY_SEPARATOR;
+                header("location: ..{$b}src{$b}library{$b}library.html");
+            }
+        }else {
+            unset($_SESSION['email']);
+            unset($_SESSION['password']);
             $b = DIRECTORY_SEPARATOR;
             header("location: ..{$b}src{$b}login{$b}index.html");
-        }
-
-        if (password_verify($password, $usuario['password'])) {
-            $b = DIRECTORY_SEPARATOR;
-            header("location: ..{$b}src{$b}library{$b}library.html");
-        }else {
-            $b = DIRECTORY_SEPARATOR;
-            header("location: ..{$b}src{$b}login{$b}login.html");
             echo "<script>window.alert('senha incorreta!')</script>";
         }
 
