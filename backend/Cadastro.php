@@ -7,6 +7,8 @@ $passwordConf = password_hash($_POST['password-confirm'], PASSWORD_DEFAULT);
 
 if ($passwordCad !== $passwordConf) {
     echo "<script> window.alert('senha incorreta!')</script>";
+    $c = DIRECTORY_SEPARATOR;
+    header("location:..{$c}src{$c}register{$c}cadastro.html");
 }else {
     $passwordCad = $passwordConf;
 

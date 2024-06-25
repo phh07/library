@@ -1,10 +1,8 @@
 <?php
-
-session_start();
     if (!empty($_POST['email']) && !empty($_POST['password'])) {
 
         $email = $_POST['email'];
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $password = $_POST['password'];
 
         $sql = "SELECT * FROM usuarios WHERE email = ?";
         require_once "Conexao.php";
@@ -15,8 +13,11 @@ session_start();
         $stmt->execute([$email]);
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (password_verify($_POST['$password'], $usuario['password'])) {
+        if (password_verify($_POST['password'], $usuario['password'])) {
             if (count($usuario) != "0") {
+                if(!isset($_SESSION)) {
+                    session_start();
+                }
                 $_SESSION['email'] = $email;
                 $_SESSION['password'] = $password;
                 

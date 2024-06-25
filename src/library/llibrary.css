@@ -54,7 +54,7 @@
 .home {
     width: 100%;
     height: 100vh;
-    background: black;
+    background: linear-gradient( to right ,#2f3542, #747d8c);
     background-size: cover;
     display: flex;
     align-items: center;
@@ -62,15 +62,28 @@
     padding: 80px 100px 0;
 }
 
-.books {
-    height: 100vh;
-    background: #fff;
+.my-book {
+    background: #f8f9fa;
+    height: 60px;
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.table {
-    background: #fff;
-    width: 85%;
+.my-book a {
+    position: relative;
+    font-size: 1.1em;
+    color: #000000;
+    text-decoration: none;
+    margin-right: 20px;
+    margin-top: 10px;
 }
+
+.my-book h2 {
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
