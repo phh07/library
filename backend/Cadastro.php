@@ -2,15 +2,15 @@
 
 $name = $_POST['name'];
 $email = $_POST['email'];
-$passwordCad = password_hash($_POST['password'], PASSWORD_DEFAULT);
-$passwordConf = password_hash($_POST['password-confirm'], PASSWORD_DEFAULT);
+$passwordCad = $_POST['password'];
+$passwordConf = $_POST['password-confirm'];
 
 if ($passwordCad !== $passwordConf) {
     echo "<script> window.alert('senha incorreta!')</script>";
     $c = DIRECTORY_SEPARATOR;
-    header("location:..{$c}src{$c}register{$c}cadastro.html");
+    header("location:..{$c}src{$c}register{$c}cadastro.php");
 }else {
-    $passwordCad = $passwordConf;
+    $passwordCad = password_hash($passwordConf, PASSWORD_DEFAULT);
 
     require_once "Conexao.php";
 
@@ -18,7 +18,7 @@ $sql = "INSERT INTO usuarios(name, password, email)" .
         "VALUES( :name, :password, :email)";
 
 
-$pdo = Conexao::conectar("../config/config.ini");
+$pdo = require "Conexao.php";
 
 $stmt = $pdo->prepare($sql);
 
@@ -30,10 +30,10 @@ $resultado = $stmt->execute([
 
 if ($resultado) {
     $c = DIRECTORY_SEPARATOR;
-    header("Location: ..{$c}src{$c}login{$c}index.html");
+    header("Location: ..{$c}src{$c}login{$c}index.php");
 } else {
     $c = DIRECTORY_SEPARATOR;
-    header("Location: ..{$c}src{$c}register{$c}cadastro.html");
+    header("Location: ..{$c}src{$c}register{$c}cadastro.php");
 }
 
 }

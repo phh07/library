@@ -1,23 +1,14 @@
 <?php
 
-class Conexao
-{ 
-    public static function conectar($caminho)
-    {
-        $config = parse_ini_file($caminho);
 
-        $dsn = "mysql:host={$config['host']};" .
-         "dbname={$config['dbname']}";
+$dsn = "mysql:host=localhost;dbname=book-manegement";
+$user="root";
+$pass="";
 
-        $pdo = new PDO(
-            $dsn,
-            $config['user'],
-            $config['password']
-        );
-
-        return $pdo;
-    }
-}
-
+return new PDO(
+$dsn,
+$user,
+$pass
+);
 
 

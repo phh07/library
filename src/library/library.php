@@ -14,8 +14,7 @@
         </a>
 
         <nav class="nav">
-            <a href="../login/index.html" id="principal">inicio</a>
-            <a href="#">cadastro</a>
+            <a href="../../backend/logout.php">sair</a>
         </nav>
     </header>
     <section class="home">
@@ -37,19 +36,26 @@
                     <th>Ações</th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    <td>
-                        <button class="btn btn-danger">exluir</button>
-                        <button class="btn btn-primary">editar</button>
-                    </td>
-                </tr>
+                <?php
+                        $livros = require_once '../../backend/select.php';
+                        foreach($livros as $livro) {
+                            echo <<<TABELA
+                                <tr>
+                                    <td><img height="70px" src="../../{$livro['capa']}" alt=""></td>
+                                    <td>{$livro['autor']}</td>
+                                    <td>{$livro['titulo']}</td>
+                                    <td>{$livro['subtitulo']}</td>
+                                    <td>{$livro['edicao']}</td>
+                                    <td>{$livro['editora']}</td>
+                                    <td>{$livro['ano']}</td>
+                                    <td>
+                                        <a href="../../backend/edit.php?id=$livro[id]" class="btn btn-primary">editar</a>
+                                        <a href='../../backend/delete.php?id=$livro[id]' class="btn btn-danger">excluir</a>
+                                    </td>
+                             TABELA;
+                        }
+                    ?>
+           
                 </tbody>
             </table>
             </section>

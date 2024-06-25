@@ -7,7 +7,7 @@
         $sql = "SELECT * FROM usuarios WHERE email = ?";
         require_once "Conexao.php";
 
-        $pdo = Conexao::conectar("../config/config.ini");
+        $pdo = require "Conexao.php";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$email]);
@@ -22,13 +22,13 @@
                 $_SESSION['password'] = $password;
                 
                 $b = DIRECTORY_SEPARATOR;
-                header("location: ..{$b}src{$b}library{$b}library.html");
+                header("location: ..{$b}src{$b}library{$b}library.php");
             }
         }else {
             unset($_SESSION['email']);
             unset($_SESSION['password']);
             $b = DIRECTORY_SEPARATOR;
-            header("location: ..{$b}src{$b}login{$b}index.html");
+            header("location: ..{$b}src{$b}login{$b}index.php");
             echo "<script>window.alert('senha incorreta!')</script>";
         }
 
