@@ -1,54 +1,33 @@
-<?php
+    <?php
 
-require_once "Conexao.php";
+    if (isset($_POST["update"])) {
+        $id = $_GET["id"];
+        $autor = $_POST["autor"];
+        $titulo = $_POST["titulo"];
+        $subtitulo = $_POST["subtitulo"];
+        $edicao = $_POST["edicao"];
+        $editora = $_POST["editora"];
+        $ano = $_POST["ano"];
 
-if (!empty($_GET["id"])) {
+        $sql = "UPDATE livros SET autor=:autor, titulo=:titulo, subtitulo=:subtitulo, edicao=:edicao, editora=:editora, ano=:ano WHERE id=:id";
+        $pdo = require_once "Conexao.php";
 
-    $pdo = require_once "Conexao.php";
 
-    $id = $_GET["id"];
+        $stmt = $pdo->prepare($sql);
 
-    $sql = "SELECT * FROM livros WHERE id=:id";
+        try {
+            $stmt->execute([
+                ':autor' => $autor,
+                ':titulo' => $titulo,
+                ':subtitulo' => $subtitulo,
+                ':edicao' => $edicao,
+                ':editora' => $editora,
+                ':ano' => $ano,
+                ':id' => $id
+            ]);
 
-    $stmt = $pdo->prepare($sql);
-
-    $result = $stmt->execute([
-        ":id" => $id
-    ]);
-
-    $dados = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if($dados) {
-
-        $autor = $dados["autor"];
-        $titulo = $dados["titulo"];
-        $subtitulo = $dados["subtitulo"];
-        $edicao = $dados["edicao"];
-        $editora = $dados["editora"];
-        $ano = $dados["ano"];
-
-    } else {
-        header("Location: ../src/library/library.php");
+            header("Location:..\src\library\library.php");
+        } catch (PDOException $e) {
+            echo "Erro ao atualizar livro: ". $e->getMessage();
+        }
     }
-
-}
-
-if (isset($_POST["editar"])) {
-
-    $autor = $_POST["autor"];
-    $titulo = $_POST["titulo"];
-    $subtitulo = $_POST["subtitulo"];
-    $edicao = $_POST["edicao"];
-    $editora = $_POST["editora"];
-    $ano = $_POST["ano"];
-
-    $pdo = require "Conexao.php";
-
-    $sql = "UPDATE livros SET autor='$autor', titulo='$titulo', subtitulo='$subtitulo', edicao='$edicao', editora='$editora', ano='$ano' WHERE id='$id'";
-
-    $stmt = $pdo->prepare($sql);
-
-    $qtdLinhas = $stmt->execute();
-
-    header("Location: ../src/library/library.php");
-}

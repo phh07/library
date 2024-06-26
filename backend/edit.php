@@ -1,8 +1,37 @@
 <?php
+require_once "saveEdit.php";
 
-include_once "saveEdit.php";
+if (isset($_GET["id"])) {
+    $id = $_GET["id"];
+} else {
+    // Handle the case where "id" is not set
+    header("Location: ../src/library/library.php");
+    exit;
+}
+
+$pdo = require_once "Conexao.php";
+
+$sql = "SELECT * FROM livros WHERE id=:id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([":id" => $id]);
+$dados = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($dados) {
+    $capa = $dados["capa"];
+    $autor = $dados["autor"];
+    $titulo = $dados["titulo"];
+    $subtitulo = $dados["subtitulo"];
+    $edicao = $dados["edicao"];
+    $editora = $dados["editora"];
+    $ano = $dados["ano"];
+} else {
+    // Trata o caso em que não há dados para o livro
+    header("Location: ../src/library/library.php");
+    exit;
+}
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
